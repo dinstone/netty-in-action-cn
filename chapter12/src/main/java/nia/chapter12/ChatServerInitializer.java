@@ -23,7 +23,7 @@ public class ChatServerInitializer extends ChannelInitializer<Channel> {
     }
 
     @Override
-    //将所有需要的 ChannelHandler 添加到 ChannelPipeline 中
+    // 将所有需要的 ChannelHandler 添加到 ChannelPipeline 中
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new HttpServerCodec());

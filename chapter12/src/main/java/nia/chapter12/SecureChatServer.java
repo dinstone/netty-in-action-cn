@@ -1,13 +1,13 @@
 package nia.chapter12;
 
+import java.net.InetSocketAddress;
+
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
-
-import java.net.InetSocketAddress;
 
 /**
  * 代码清单 12-7 向 ChatServer 添加加密
@@ -23,9 +23,8 @@ public class SecureChatServer extends ChatServer {
     }
 
     @Override
-    protected ChannelInitializer<Channel> createInitializer(
-        ChannelGroup group) {
-        //返回之前创建的 SecureChatServerInitializer 以启用加密
+    protected ChannelInitializer<Channel> createInitializer(ChannelGroup group) {
+        // 返回之前创建的 SecureChatServerInitializer 以启用加密
         return new SecureChatServerInitializer(group, context);
     }
 
@@ -36,8 +35,7 @@ public class SecureChatServer extends ChatServer {
         }
         int port = Integer.parseInt(args[0]);
         SelfSignedCertificate cert = new SelfSignedCertificate();
-        SslContext context = SslContext.newServerContext(
-                cert.certificate(), cert.privateKey());
+        SslContext context = SslContext.newServerContext(cert.certificate(), cert.privateKey());
         final SecureChatServer endpoint = new SecureChatServer(context);
         ChannelFuture future = endpoint.start(new InetSocketAddress(port));
         Runtime.getRuntime().addShutdownHook(new Thread() {
